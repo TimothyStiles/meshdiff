@@ -29,5 +29,8 @@
     "socket.io": "^1.3.7",
     "three": "^0.73.0",
     "three-math": "^0.69.0"
+  },
+  "bin": {
+    "mdiff": "app.js"
   }
 }
