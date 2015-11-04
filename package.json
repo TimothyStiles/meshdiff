@@ -1,0 +1,26 @@
+{
+  "name": "mdiff",
+  "version": "0.0.0",
+  "description": "\"A utility to visually diff 3D objects.\"",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://bitbucket.org/TimothyStiles/mdiff.git"
+  },
+  "keywords": [
+    "\"3D\"",
+    "\"mesh\"",
+    "\"CAD\"",
+    "\"ThreeJS\"",
+    "\"Three\"",
+    "\"WebGL\"",
+    "\"math\"",
+    "\"geometry\""
+  ],
+  "author": "Timothy S. Stiles",
+  "license": "UNLICENSED",
+  "homepage": "https://bitbucket.org/TimothyStiles/mdiff#readme"
+}
