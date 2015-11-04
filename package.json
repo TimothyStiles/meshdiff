@@ -22,5 +22,9 @@
   ],
   "author": "Timothy S. Stiles",
   "license": "UNLICENSED",
-  "homepage": "https://bitbucket.org/TimothyStiles/mdiff#readme"
+  "homepage": "https://bitbucket.org/TimothyStiles/mdiff#readme",
+  "dependencies": {
+    "three": "^0.73.0",
+    "three-math": "^0.69.0"
+  }
 }
