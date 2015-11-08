@@ -5,24 +5,28 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var op = require('open');
 var path = require('path');
+var THREE = require('three');
+//var THREE.STLLoader() = require('')
 
 var fileName1 = path.normalize(process.argv[2]),
     fileName2 = path.normalize(process.argv[3]),
     filePath1 = path.join(process.cwd(), fileName1),
     filePath2 = path.join(process.cwd(), fileName2);
    
-console.log(filePath1, filePath2);
+//console.log(filePath1, filePath2);
 
-console.log(process.argv[2]);
-console.log(process.cwd());
+//load stl files. In future will modularize and include more formats.
+
+
+//serve client files
 
 app.get('/', function(req, res){
    res.sendFile(__dirname + '/index.html');
 });
 
-//app.get('/js/bundle.js', function(req, res){
-  //  res.sendFile(__dirname + '/js/bundle.js');
-//});
+app.get('/bundle.js', function(req, res){
+    res.sendFile(__dirname + '/bundle.js');
+});
 
 io.on('connection', function(socket) {
   console.log('a user connected');
