@@ -13,16 +13,25 @@ function init() {
 	container = document.createElement( 'div' );
 	document.body.appendChild( container );
 
-	camera = new THREE.PerspectiveCamera( 35, window.innerWidth / window.innerHeight, 1, 15 );
-	camera.position.set( 3, 0.15, 3 );
-
-	cameraTarget = new THREE.Vector3( 0, -0.25, 0 );
-
-
 	scene = new THREE.Scene();
 	scene.fog = new THREE.Fog( 0x72645b, 2, 15 );
 
+	camera = new THREE.PerspectiveCamera( 35, window.innerWidth / window.innerHeight, 1, 15 );
 
+	//camera.position.set( 3, 0.15, 3 );
+	camera.position.set( 3, 3, 3 );
+	cameraTarget = new THREE.Vector3( 0, -0.25, 0 );
+
+//  camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
+//  camera.position.z = 500;
+//  scene.add(camera);
+
+
+// create the Cube
+//  cube = new THREE.Mesh( new THREE.CubeGeometry( 1, 1, 1 ), new THREE.MeshNormalMaterial() );
+  // add the object to the scene
+//  scene.add( cube );
+//  cube.position.set(0,-0.25,0);
 	// Ground
 
 	var plane = new THREE.Mesh(
@@ -115,7 +124,10 @@ socket.on('connect', function(){
 });
 
 socket.on('mesh', function(data){
-  scene.addObject(mesh);
-
+  var parseModel = new THREE.ObjectLoader();
+  var model = parseModel.parse(data);
+  model.position.set(0,-0.25,0);
+  scene.add(model);
 });
+
 socket.on('disconnect', function(){});
