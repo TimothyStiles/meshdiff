@@ -1,6 +1,6 @@
 var socket = require('socket.io-client')('http://127.0.0.1:8080/');
 var THREE = require('three');
-
+var OrbitControls = require('three-orbit-controls')(THREE);
 var camera, cameraTarget, scene, renderer;
 
 var containers;
@@ -68,6 +68,9 @@ function init() {
 
 	window.addEventListener( 'resize', onWindowResize, false );
 
+  controls = new OrbitControls(camera, renderer.domElement);
+  controls.enablingDamping = true;
+  controls.dampingFactor = 0.25;
 }
 
 function addShadowedLight( x, y, z, color, intensity ) {
@@ -113,8 +116,8 @@ function animate() {
 
 function render() {
 
-	camera.lookAt( cameraTarget );
-
+//	camera.lookAt( cameraTarget );
+  controls.update();
 	renderer.render( scene, camera );
 
 }
