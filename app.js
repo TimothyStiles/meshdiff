@@ -1,21 +1,33 @@
 #!/usr/bin/env node
 
+var fs = require('fs');
+var path = require('path');
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var op = require('open');
-var path = require('path');
 var THREE = require('three');
-var STLLoad = require('./js/loaders/STLLoader.js');
+
 
 var fileName1 = path.normalize(process.argv[2]),
     fileName2 = path.normalize(process.argv[3]),
-    filePath1 = path.join(process.cwd(), fileName1),
-    filePath2 = path.join(process.cwd(), fileName2);
+    filePath1 = path.resolve(process.cwd(), fileName1),
+    filePath2 = path.resolve(process.cwd(), fileName2);
    
-//console.log(filePath1, filePath2);
-//console.log(fileName1, fileName2);
-//load stl files. In future will modularize and include more formats.
+console.log(filePath1, filePath2);
+console.log(fileName1, fileName2);
+console.log(__dirname);
+//load json files. In future will modularize and include more formats.
+
+
+function handleFile(err, data) {
+  if (err) throw err;
+  var model = JSON.parse(data);
+  var geom = model.geometry;
+ // var mesh = new THREE.Mesh(geom, new THREE.MeshNormalMaterial()); 
+  //io.emit('mesh', JSON.parse(data));
+  console.log(geom);
+}
 
 //serve client files
 
@@ -28,7 +40,7 @@ app.get('/bundle.js', function(req, res){
 });
 
 app.get('/favicon.ico', function(req, res){
-  res.sendFile(_dirrname + '/favicon.ico')
+  res.sendFile(__dirname + '/favicon.ico');
 });
 
 io.on('connection', function(socket) {
@@ -47,6 +59,8 @@ io.on('connection', function(socket) {
   geom.computeFaceNormals();
   var mesh = new THREE.Mesh(geom, new THREE.MeshNormalMaterial());
   socket.emit('mesh', mesh.toJSON());
+//  fs.readFile(filePath1, handleFile);
+
 });
 
 
