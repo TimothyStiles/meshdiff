@@ -7,27 +7,26 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var op = require('open');
 var THREE = require('three');
-
+//var objparse = require('./js/ObjectLoader');
 
 var fileName1 = path.normalize(process.argv[2]),
     fileName2 = path.normalize(process.argv[3]),
     filePath1 = path.resolve(process.cwd(), fileName1),
     filePath2 = path.resolve(process.cwd(), fileName2);
    
-console.log(filePath1, filePath2);
-console.log(fileName1, fileName2);
-console.log(__dirname);
 //load json files. In future will modularize and include more formats.
 
+var parseModel = new THREE.ObjectLoader();
+
+
+//should be moved to another file and imported.
 
 function handleFile(err, data) {
   if (err) throw err;
-  var model = JSON.parse(data);
-  var geom = model.geometry;
- // var mesh = new THREE.Mesh(geom, new THREE.MeshNormalMaterial()); 
-  //io.emit('mesh', JSON.parse(data));
-  console.log(geom);
+  var model = parseModel.parse(JSON.parse(data));
+  io.emit('mesh', model.toJSON());
 }
+
 
 //serve client files
 
@@ -58,9 +57,8 @@ io.on('connection', function(socket) {
   geom.faces.push( new THREE.Face3( 0, 1, 2 ) );
   geom.computeFaceNormals();
   var mesh = new THREE.Mesh(geom, new THREE.MeshNormalMaterial());
-  socket.emit('mesh', mesh.toJSON());
-//  fs.readFile(filePath1, handleFile);
-
+ // socket.emit('mesh', mesh.toJSON());
+  fs.readFile(filePath1, handleFile);
 });
 
 
