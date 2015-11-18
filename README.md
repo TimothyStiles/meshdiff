@@ -18,6 +18,7 @@ mdiff mesh1.obj mesh2.obj
 ### If you already have git and node installed just run this from the command line.
 
 ``` shell
+
 git clone https://TimothyStiles@bitbucket.org/TimothyStiles/mdiff.git && cd mdiff && npm run build 
 
 ```
