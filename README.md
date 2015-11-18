@@ -14,7 +14,7 @@ mdiff mesh1.obj mesh2.obj
 
 ## Mac OSX
 
-### If you already have node installed just clone and '''npm run build'''
+### If you already have node installed just clone and ''' js npm run build'''
 To install mdiff you will need to have node installed.
 
 I typically would suggest that you install it through the Mac OSX package manager
