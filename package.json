@@ -4,7 +4,8 @@
   "description": "\"A utility to visually diff 3D objects.\"",
   "main": "app.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "build": "browserify ./js/client.js -o bundle.js && npm install -g"
   },
   "repository": {
     "type": "git",
@@ -33,5 +34,8 @@
   },
   "bin": {
     "mdiff": "app.js"
+  },
+  "devDependencies": {
+    "browserify": "^12.0.1"
   }
 }
