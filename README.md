@@ -14,6 +14,23 @@ mdiff mesh1.obj mesh2.obj
 
 ## Mac OSX
 
+To install mdiff you will need to have node and git installed.
+
+
+
+### If you do not have node and git installed. I suggest that you install them through the Mac OSX package manager [homebrew](http://brew.sh/);
+
+``` shell
+
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+```
+
+``` shell
+
+brew install git && brew install node
+
+```
 
 ### If you already have git and node installed just run this from the command line.
 
@@ -23,7 +40,13 @@ git clone https://TimothyStiles@bitbucket.org/TimothyStiles/mdiff.git && cd mdif
 
 ```
 
-To install mdiff you will need to have node installed.
+and then mdiff your objects!
 
-I typically would suggest that you install it through the Mac OSX package manager
-<a href="http://brew.sh/">Homebrew</a>.
+``` shell
+
+mdiff mesh1.obj mesh2.obj
+
+```
+
+
+
