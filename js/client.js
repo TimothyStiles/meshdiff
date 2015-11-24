@@ -42,7 +42,7 @@ function init() {
 	plane.position.y = -0.5;
 	scene.add( plane );
 
-	plane.receiveShadow = true;
+//	plane.receiveShadow = true;
 
 
 	// Lights
@@ -127,9 +127,11 @@ socket.on('connect', function(){
 });
 
 socket.on('mesh', function(data){
+  console.log(data);
   var parseModel = new THREE.ObjectLoader();
   var model = parseModel.parse(data);
   model.position.set(0,-0.25,0);
+  console.log(model);
   scene.add(model);
 });
 
