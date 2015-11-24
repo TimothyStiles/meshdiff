@@ -7,6 +7,9 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var op = require('open');
 var THREE = require('three');
+var stl = require('./js/loaders/STLLoader.js');
+var Buffer = require('buffer').Buffer;
+var Iconv = require('iconv').Iconv;
 
 var fileName1 = path.normalize(process.argv[2]),
     fileName2 = path.normalize(process.argv[3]),
@@ -15,11 +18,19 @@ var fileName1 = path.normalize(process.argv[2]),
    
 //load json files. In future will modularize and include more formats.
 var parseModel = new THREE.ObjectLoader();
+var stlModel = new stl();
+
 
 //should be moved to another file and imported.
 function handleFile(err, data) {
   if (err) throw err;
   var model = parseModel.parse(JSON.parse(data));
+//  var iconv = new Iconv('UTF-8', 'UTF-32');
+//  var buf = iconv.convert(data);
+//  var arrayBuffer = new Float32Array(buf).buffer;
+//  var model = stlModel.parse(arrayBuffer); 
+//  var mesh = new THREE.Mesh(model, new THREE.MeshNormalMaterial());
+//  console.log(mesh); 
   io.emit('mesh', model.toJSON());
 }
 
@@ -40,7 +51,7 @@ app.get('/favicon.ico', function(req, res){
 
 io.on('connection', function(socket) {
   console.log('a user connected');
-  fs.readFile(filePath1, handleFile);
+  fs.readFile(filePath1, "utf-8", handleFile);
 });
 
 
