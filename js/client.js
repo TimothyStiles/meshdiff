@@ -1,9 +1,8 @@
-var socket = require('socket.io-client')('http://127.0.0.1:8080/');
-var THREE = require('three');
-var OrbitControls = require('three-orbit-controls')(THREE);
-var camera, cameraTarget, scene, renderer;
+var THREE = require('three'),
+    OrbitControls = require('three-orbit-controls')(THREE),
+    socket = require('socket.io-client')('http://127.0.0.1:8080/');
 
-var containers;
+var camera, cameraTarget, containers, scene, renderer;
 
 init();
 animate();
@@ -22,33 +21,21 @@ function init() {
 	camera.position.set( 3, 3, 3 );
 	cameraTarget = new THREE.Vector3( 0, -0.25, 0 );
 
-//  camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
-//  camera.position.z = 500;
-//  scene.add(camera);
 
-
-// create the Cube
-//  cube = new THREE.Mesh( new THREE.CubeGeometry( 1, 1, 1 ), new THREE.MeshNormalMaterial() );
-  // add the object to the scene
-//  scene.add( cube );
-//  cube.position.set(0,-0.25,0);
 	// Ground
 
 	var plane = new THREE.Mesh(
 		new THREE.PlaneBufferGeometry( 40, 40 ),
 		new THREE.MeshPhongMaterial( { color: 0x999999, specular: 0x101010 } )
 	);
+
 	plane.rotation.x = -Math.PI/2;
 	plane.position.y = -0.5;
 	scene.add( plane );
 
-//	plane.receiveShadow = true;
-
-
 	// Lights
 
 	scene.add( new THREE.HemisphereLight( 0x443333, 0x111122 ) );
-
 	addShadowedLight( 0.5, 1, -1, 0xffff99, 1 );
 
 	// renderer
@@ -87,13 +74,10 @@ function addShadowedLight( x, y, z, color, intensity ) {
 	directionalLight.shadowCameraRight = d;
 	directionalLight.shadowCameraTop = d;
 	directionalLight.shadowCameraBottom = -d;
-
 	directionalLight.shadowCameraNear = 1;
 	directionalLight.shadowCameraFar = 4;
-
 	directionalLight.shadowMapWidth = 1024;
 	directionalLight.shadowMapHeight = 1024;
-
 	directionalLight.shadowBias = -0.005;
 
 }
@@ -116,23 +100,17 @@ function animate() {
 
 function render() {
 
-//	camera.lookAt( cameraTarget );
   controls.update();
 	renderer.render( scene, camera );
 
 }
 
 socket.on('connect', function(){
-  console.log('it works');
+  console.log('We have made contact...');
 });
 
 socket.on('mesh', function(data){
   console.log(data);
-  var parseModel = new THREE.ObjectLoader();
-  var model = parseModel.parse(data);
-  model.position.set(0,-0.25,0);
-  console.log(model);
-  scene.add(model);
 });
 
 socket.on('disconnect', function(){});
