@@ -1,5 +1,6 @@
 var THREE = require('three'),
     OrbitControls = require('three-orbit-controls')(THREE),
+    stl = require('./loaders/STLLoader.js'),
     socket = require('socket.io-client')('http://127.0.0.1:8080/');
 
 var camera, cameraTarget, containers, scene, renderer;
@@ -109,8 +110,29 @@ socket.on('connect', function(){
   console.log('We have made contact...');
 });
 
-socket.on('mesh', function(data){
+socket.on('mesh1', function(data){
   console.log(data);
+  var stlLoader = new stl();
+  stlLoader.load('http://127.0.0.1:8080' + data, function(obj) {
+    var geom = new THREE.Geometry().fromBufferGeometry(obj);
+    geom.normalize();
+    var mesh = new THREE.Mesh(geom, new THREE.MeshNormalMaterial());
+    mesh.position.set(-1, -0.25, 0);
+    scene.add(mesh);
+  });
+});
+
+
+socket.on('mesh2', function(data){
+  console.log(data);
+  var stlLoader = new stl();
+  stlLoader.load('http://127.0.0.1:8080' + data, function(obj) {
+    var geom = new THREE.Geometry().fromBufferGeometry(obj);
+    geom.normalize();
+    var mesh = new THREE.Mesh(geom, new THREE.MeshNormalMaterial());
+    mesh.position.set(1, -0.25, 0);
+    scene.add(mesh);
+  });
 });
 
 socket.on('disconnect', function(){});
