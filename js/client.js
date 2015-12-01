@@ -59,6 +59,7 @@ function init() {
   controls = new OrbitControls(camera, renderer.domElement);
   controls.enablingDamping = true;
   controls.dampingFactor = 0.25;
+  controls.noPan = false;
 }
 
 function addShadowedLight( x, y, z, color, intensity ) {
@@ -117,7 +118,7 @@ socket.on('mesh1', function(data){
     var geom = new THREE.Geometry().fromBufferGeometry(obj);
     geom.normalize();
     var mesh = new THREE.Mesh(geom, new THREE.MeshNormalMaterial());
-    mesh.position.set(-1, -0.25, 0);
+    mesh.position.set(-3, -0.25, 0);
     scene.add(mesh);
   });
 });
@@ -130,7 +131,7 @@ socket.on('mesh2', function(data){
     var geom = new THREE.Geometry().fromBufferGeometry(obj);
     geom.normalize();
     var mesh = new THREE.Mesh(geom, new THREE.MeshNormalMaterial());
-    mesh.position.set(1, -0.25, 0);
+    mesh.position.set(3, -0.25, 0);
     scene.add(mesh);
   });
 });
