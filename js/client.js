@@ -117,6 +117,7 @@ socket.on('mesh1', function(data){
   stlLoader.load('http://127.0.0.1:8080' + data, function(obj) {
     var geom = new THREE.Geometry().fromBufferGeometry(obj);
     geom.normalize();
+    geom.mergeVertices();
     var mesh = new THREE.Mesh(geom, new THREE.MeshNormalMaterial());
     mesh.position.set(-3, -0.25, 0);
     scene.add(mesh);
@@ -130,6 +131,7 @@ socket.on('mesh2', function(data){
   stlLoader.load('http://127.0.0.1:8080' + data, function(obj) {
     var geom = new THREE.Geometry().fromBufferGeometry(obj);
     geom.normalize();
+    geom.mergeVertices();
     var mesh = new THREE.Mesh(geom, new THREE.MeshNormalMaterial());
     mesh.position.set(3, -0.25, 0);
     scene.add(mesh);
