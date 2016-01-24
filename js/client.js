@@ -1,9 +1,10 @@
 var THREE = require('three'),
+    ThreeBSP = require('three-js-csg')(THREE),
     OrbitControls = require('three-orbit-controls')(THREE),
     stl = require('./loaders/STLLoader.js'),
     socket = require('socket.io-client')('http://127.0.0.1:8080/');
 
-var camera, cameraTarget, containers, scene, renderer;
+var camera, cameraTarget, containers, scene, renderer, newMesh, OldMesh;
 
 init();
 animate();
@@ -118,6 +119,8 @@ socket.on('mesh1', function(data){
     var geom = new THREE.Geometry().fromBufferGeometry(obj);
     geom.normalize();
     geom.mergeVertices();
+    newMesh = new ThreeBSP(geom);    
+    socket.emit('oldMesh');
     var mesh = new THREE.Mesh(geom, new THREE.MeshNormalMaterial());
     mesh.position.set(-3, -0.25, 0);
     scene.add(mesh);
@@ -132,10 +135,32 @@ socket.on('mesh2', function(data){
     var geom = new THREE.Geometry().fromBufferGeometry(obj);
     geom.normalize();
     geom.mergeVertices();
+    oldMesh = new ThreeBSP(geom);
+    socket.emit('newMesh');
     var mesh = new THREE.Mesh(geom, new THREE.MeshNormalMaterial());
     mesh.position.set(3, -0.25, 0);
-    scene.add(mesh);
-  });
+    scene.add(mesh); 
+   });
+});
+
+socket.on('newMesh', function(){
+  if ((newMesh !== undefined) && (OldMesh !== undefined)) {
+    var sub = newMesh.subtract(oldMesh);
+    var diffMesh = sub.toMesh();
+    diffMesh.material = new THREE.MeshNormalMaterial();
+    diffMesh.position.set(0, -0.25, 0);
+    scene.add(diffMesh);
+  } 
+});
+
+socket.on('oldMesh', function(){
+  if ((newMesh !== undefined) && (OldMesh !== undefined)) {
+    var sub = newMesh.subtract(oldMesh);
+    var diffMesh = sub.toMesh();
+    diffMesh.material = new THREE.MeshNormalMaterial();
+    diffMesh.position.set(0, -0.25, 0);
+    scene.add(diffMesh);
+  } 
 });
 
 socket.on('disconnect', function(){});
