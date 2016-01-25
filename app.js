@@ -41,8 +41,13 @@ io.on('connection', function(socket) {
   console.log('We have made contact...');
   socket.emit('mesh1', baseName1);
   socket.emit('mesh2', baseName2);
+  socket.on('newMesh', function(msg){
+    socket.emit('newMesher', 'newMesh');
+  });
+  socket.on('oldMesh', function(msg){
+    socket.emit('oldMesher', 'oldMesh');
+  });
 });
-
 
 var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
