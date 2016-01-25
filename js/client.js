@@ -120,7 +120,7 @@ socket.on('mesh1', function(data){
     geom.normalize();
     geom.mergeVertices();
     newMesh = new ThreeBSP(geom);    
-    socket.emit('oldMesh');
+    socket.emit('oldMesh', 'oldMesher');
     var mesh = new THREE.Mesh(geom, new THREE.MeshNormalMaterial());
     mesh.position.set(-3, -0.25, 0);
     scene.add(mesh);
@@ -136,31 +136,45 @@ socket.on('mesh2', function(data){
     geom.normalize();
     geom.mergeVertices();
     oldMesh = new ThreeBSP(geom);
-    socket.emit('newMesh');
+    socket.emit('newMesh', 'newMesher');
     var mesh = new THREE.Mesh(geom, new THREE.MeshNormalMaterial());
     mesh.position.set(3, -0.25, 0);
     scene.add(mesh); 
    });
 });
 
-socket.on('newMesh', function(){
-  if ((newMesh !== undefined) && (OldMesh !== undefined)) {
+socket.on('newMesher', function(){
+  console.log('newMesh');
+  if ((newMesh !== undefined) && (oldMesh !== undefined)) {
+    console.log('doing it new!');
     var sub = newMesh.subtract(oldMesh);
     var diffMesh = sub.toMesh();
-    diffMesh.material = new THREE.MeshNormalMaterial();
+    diffMesh.material = new THREE.MeshBasicMaterial({color: 0x00FF00});
     diffMesh.position.set(0, -0.25, 0);
     scene.add(diffMesh);
+    
+    var sub2 = oldMesh.subtract(newMesh);
+    var diffMesh2 = sub2.toMesh();
+    diffMesh2.material = new THREE.MeshBasicMaterial({color: 0xFF0000});
+    diffMesh2.position.set(0, -0.25, 0);
+    scene.add(diffMesh2);
+
+   // more on this to come.
+   // var intersection = oldMesh.intersect(newMesh);
+    
   } 
 });
 
-socket.on('oldMesh', function(){
-  if ((newMesh !== undefined) && (OldMesh !== undefined)) {
-    var sub = newMesh.subtract(oldMesh);
-    var diffMesh = sub.toMesh();
-    diffMesh.material = new THREE.MeshNormalMaterial();
-    diffMesh.position.set(0, -0.25, 0);
-    scene.add(diffMesh);
-  } 
-});
+//socket.on('oldMesher', function(){
+//  console.log('oldMesh');
+//  if ((newMesh !== undefined) && (oldMesh !== undefined)) {
+//    console.log('doing it old!');
+//    var sub = newMesh.subtract(oldMesh);
+//    var diffMesh = sub.toMesh();
+//    diffMesh.material = new THREE.MeshNormalMaterial();
+//    diffMesh.position.set(0, -0.25, 0);
+//    scene.add(diffMesh);
+//  } 
+//});
 
 socket.on('disconnect', function(){});
