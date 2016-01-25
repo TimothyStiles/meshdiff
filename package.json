@@ -1,6 +1,6 @@
 {
   "name": "mdiff",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "\"A utility to visually diff 3D objects.\"",
   "main": "app.js",
   "scripts": {
