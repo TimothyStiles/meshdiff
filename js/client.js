@@ -120,7 +120,7 @@ socket.on('mesh1', function(data){
     geom.normalize();
     geom.mergeVertices();
     newMesh = new ThreeBSP(geom);    
-    socket.emit('oldMesh', 'oldMesher');
+    socket.emit('newMesh', 'newMesher');
     var mesh = new THREE.Mesh(geom, new THREE.MeshNormalMaterial());
     mesh.position.set(-3, -0.25, 0);
     scene.add(mesh);
@@ -136,45 +136,48 @@ socket.on('mesh2', function(data){
     geom.normalize();
     geom.mergeVertices();
     oldMesh = new ThreeBSP(geom);
-    socket.emit('newMesh', 'newMesher');
+    socket.emit('oldMesh', 'oldMesher');
     var mesh = new THREE.Mesh(geom, new THREE.MeshNormalMaterial());
     mesh.position.set(3, -0.25, 0);
     scene.add(mesh); 
    });
 });
 
-socket.on('newMesher', function(){
-  console.log('newMesh');
+socket.on('oldMesher', function(){
+  console.log('oldMesh');
   if ((newMesh !== undefined) && (oldMesh !== undefined)) {
     console.log('doing it new!');
     var sub = newMesh.subtract(oldMesh);
     var diffMesh = sub.toMesh();
-    diffMesh.material = new THREE.MeshBasicMaterial({color: 0x00FF00});
+    diffMesh.material = new THREE.MeshLambertMaterial({color: 0x00FF00,
+                             transparent: false, side: THREE.DoubleSide, opacity: 0.4});
     diffMesh.position.set(0, -0.25, 0);
-    scene.add(diffMesh);
-    
+//    scene.add(diffMesh);
+
     var sub2 = oldMesh.subtract(newMesh);
     var diffMesh2 = sub2.toMesh();
-    diffMesh2.material = new THREE.MeshBasicMaterial({color: 0xFF0000});
+    diffMesh2.material = new THREE.MeshLambertMaterial({color: 0xFF0000,
+                             transparent: false, side: THREE.DoubleSide, opacity: 0.4});
     diffMesh2.position.set(0, -0.25, 0);
-    scene.add(diffMesh2);
+//    scene.add(diffMesh2);
 
-   // more on this to come.
-   // var intersection = oldMesh.intersect(newMesh);
-    
-  } 
+    var intersection = oldMesh.intersect(newMesh);
+    var intersectMesh = intersection.toMesh();
+    intersectMesh.material = new THREE.MeshLambertMaterial({color: 0x0000FF,
+                             transparent: true, side: THREE.DoubleSide, opacity: 0.8});
+    intersectMesh.position.set(0,-0.25,0);
+//    scene.add(intersectMesh);
+//    var temp1 = sub2.subtract(intersection);
+    var negative0 = oldMesh.subtract(sub2);
+    var negative1 = oldMesh.subtract(negative0);
+    var negative2 = negative1.subtract(intersectMesh);
+    var neg = negative2.toMesh();
+    neg.material = new THREE.MeshLambertMaterial({color: 0xFF0000,
+                             transparent: false, side: THREE.DoubleSide, opacity: 0.4});
+    neg.position.set(0, -0.25, 0);
+
+    scene.add(neg);
+  }
 });
-
-//socket.on('oldMesher', function(){
-//  console.log('oldMesh');
-//  if ((newMesh !== undefined) && (oldMesh !== undefined)) {
-//    console.log('doing it old!');
-//    var sub = newMesh.subtract(oldMesh);
-//    var diffMesh = sub.toMesh();
-//    diffMesh.material = new THREE.MeshNormalMaterial();
-//    diffMesh.position.set(0, -0.25, 0);
-//    scene.add(diffMesh);
-//  } 
-//});
 
 socket.on('disconnect', function(){});
