@@ -1,52 +1,24 @@
-# mdiff
+# meshdiff
 
-## A command line tool to visually diff 3D meshes.
+Inspired by <code> git diff </code> this command line tool helps you visually diff changes in your 3D meshes.
 
-# example
+<code> meshdiff mesh1.stl mesh2.stl </code>
 
-``` shell
+![Image of diff](https://github.com/TimothyStiles/meshdiff/blob/master/diffImage.png)
 
-mdiff mesh1.obj mesh2.obj
 
-```
+# install
 
-# build
-
-## Mac OSX
-
-To install mdiff you will need to have node and git installed.
+<code> npm install meshdiff -g </code>
 
 
 
-### If you do not have node and git installed. I suggest that you install them through the Mac OSX package manager [homebrew](http://brew.sh/);
 
-``` shell
+# build from repo
 
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+<code> git clone https://TimothyStiles@bitbucket.org/TimothyStiles/mdiff.git && cd mdiff && npm run build </code>
 
-```
 
-``` shell
-
-brew install git && brew install node
-
-```
-
-### If you already have git and node installed just run this from the command line.
-
-``` shell
-
-git clone https://TimothyStiles@bitbucket.org/TimothyStiles/mdiff.git && cd mdiff && npm run build 
-
-```
-
-and then mdiff your objects!
-
-``` shell
-
-mdiff mesh1.obj mesh2.obj
-
-```
 
 
 
