@@ -14,34 +14,20 @@ function init() {
 	container = document.createElement( 'div' );
 	document.body.appendChild( container );
 
+  // scene
 	scene = new THREE.Scene();
 	scene.fog = new THREE.Fog( 0x72645b, 2, 15 );
 
+  // camera
 	camera = new THREE.PerspectiveCamera( 35, window.innerWidth / window.innerHeight, 1, 15 );
-
-	//camera.position.set( 3, 0.15, 3 );
 	camera.position.set( 3, 3, 3 );
 	cameraTarget = new THREE.Vector3( 0, -0.25, 0 );
 
-
-	// Ground
-
-	var plane = new THREE.Mesh(
-		new THREE.PlaneBufferGeometry( 40, 40 ),
-		new THREE.MeshPhongMaterial( { color: 0x999999, specular: 0x101010 } )
-	);
-
-	plane.rotation.x = -Math.PI/2;
-	plane.position.y = -0.5;
-	scene.add( plane );
-
 	// Lights
-
 	scene.add( new THREE.HemisphereLight( 0x443333, 0x111122 ) );
 	addShadowedLight( 0.5, 1, -1, 0xffff99, 1 );
 
 	// renderer
-
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
 	renderer.setClearColor( scene.fog.color );
 	renderer.setPixelRatio( window.devicePixelRatio );
@@ -150,33 +136,37 @@ socket.on('oldMesher', function(){
     var sub = newMesh.subtract(oldMesh);
     var diffMesh = sub.toMesh();
     diffMesh.material = new THREE.MeshLambertMaterial({color: 0x00FF00,
-                             transparent: false, side: THREE.DoubleSide, opacity: 0.4});
+                             transparent: true, side: THREE.DoubleSide, opacity: 0.4});
     diffMesh.position.set(0, -0.25, 0);
-//    scene.add(diffMesh);
+    scene.add(diffMesh);
 
     var sub2 = oldMesh.subtract(newMesh);
     var diffMesh2 = sub2.toMesh();
     diffMesh2.material = new THREE.MeshLambertMaterial({color: 0xFF0000,
-                             transparent: false, side: THREE.DoubleSide, opacity: 0.4});
+                             transparent: true, side: THREE.DoubleSide, opacity: 0.4});
     diffMesh2.position.set(0, -0.25, 0);
-//    scene.add(diffMesh2);
+    scene.add(diffMesh2);
 
     var intersection = oldMesh.intersect(newMesh);
     var intersectMesh = intersection.toMesh();
     intersectMesh.material = new THREE.MeshLambertMaterial({color: 0x0000FF,
-                             transparent: true, side: THREE.DoubleSide, opacity: 0.8});
+                             transparent: false, side: THREE.DoubleSide, opacity: 0.2});
     intersectMesh.position.set(0,-0.25,0);
-//    scene.add(intersectMesh);
-//    var temp1 = sub2.subtract(intersection);
-    var negative0 = oldMesh.subtract(sub2);
-    var negative1 = oldMesh.subtract(negative0);
-    var negative2 = negative1.subtract(intersectMesh);
-    var neg = negative2.toMesh();
-    neg.material = new THREE.MeshLambertMaterial({color: 0xFF0000,
-                             transparent: false, side: THREE.DoubleSide, opacity: 0.4});
-    neg.position.set(0, -0.25, 0);
+    scene.add(intersectMesh);
 
-    scene.add(neg);
+// This is supposed to show the holes made by the newMesh.
+// Having a hard time getting this piece to work.
+//    var temp1 = sub2.subtract(intersection);
+
+//    var negative0 = oldMesh.subtract(sub2);
+//    var negative1 = oldMesh.subtract(negative0);
+//    var negative2 = negative1.subtract(intersectMesh);
+//    var neg = negative2.toMesh();
+//    neg.material = new THREE.MeshLambertMaterial({color: 0xFF0000,
+//                             transparent: false, side: THREE.DoubleSide, opacity: 0.4});
+//    neg.position.set(0, -0.25, 0);
+//
+//    scene.add(neg);
   }
 });
 
