@@ -22,7 +22,7 @@
     "\"geometry\""
   ],
   "author": "Timothy S. Stiles",
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
   "homepage": "https://bitbucket.org/TimothyStiles/mdiff#readme",
   "dependencies": {
     "express": "^4.13.3",
