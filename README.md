@@ -20,6 +20,10 @@ Inspired by <code> git diff </code> this command line tool helps you visually di
 
 
 
+
+
+
+# license
 Copyright 2016 Timothy S. Stiles
 
    Licensed under the Apache License, Version 2.0 (the "License");
