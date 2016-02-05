@@ -16,7 +16,7 @@ Inspired by <code> git diff </code> this command line tool helps you visually di
 
 # build from repo
 
-<code> git clone https://TimothyStiles@bitbucket.org/TimothyStiles/mdiff.git && cd mdiff && npm run build </code>
+<code> git clone https://TimothyStiles@github.com/TimothyStiles/meshdiff.git && cd meshdiff && npm run build </code>
 
 
 
