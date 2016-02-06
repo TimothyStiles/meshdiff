@@ -53,6 +53,7 @@ but is tricky to implement because of time/ language constraints.
 
 Possibly port to clojure/clojurescript for multithreading and immutable data structures.
 
+Fix registration.
 
 
 
