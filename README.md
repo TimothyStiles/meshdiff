@@ -51,6 +51,8 @@ Figure out computationally efficient way to display holes made in old mesh from 
 
 but is tricky to implement because of time/ language constraints.
 
+Possibly port to clojure/clojurescript for multithreading and immutable data structures.
+
 
 
 
