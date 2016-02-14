@@ -1,7 +1,7 @@
 {
   "name": "meshdiff",
-  "version": "0.1.4",
-  "description": "\"A utility to visually diff 3D objects.\"",
+  "version": "0.1.5",
+  "description": "A utility to visually diff 3D objects.",
   "main": "app.js",
   "scripts": {
     "test": "test",
