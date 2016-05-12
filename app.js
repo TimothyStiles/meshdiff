@@ -5,8 +5,7 @@ var fs = require('fs'),
     app = require('express')(),
     http = require('http').Server(app),
     io = require('socket.io')(http),
-    op = require('open'),
-    THREE = require('three');
+    op = require('open');
 
 var fileName1 = path.normalize(process.argv[2]),
     fileName2 = path.normalize(process.argv[3]),
